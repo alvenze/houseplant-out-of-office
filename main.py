@@ -30,8 +30,12 @@ def gate_check(text: str) -> None:
     text.encode("utf-8")
 
 
-def main() -> int:
+def main(argv: list[str]) -> int:
     gate_check(REPLY)
+    if "--print" in argv:
+        # Show the exact entry text, for a quick eyeball before submitting.
+        print(REPLY)
+        return 0
     out_dir = os.environ.get("OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
@@ -47,4 +51,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(sys.argv[1:]))
